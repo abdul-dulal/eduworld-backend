@@ -26,7 +26,7 @@ async function run() {
     });
 
     app.get("/", (req, res) => {
-      res.send("hello from eduworld");
+      res.send("hello from eduworld there are some issue");
     });
   } finally {
   }

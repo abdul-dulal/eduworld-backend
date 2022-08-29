@@ -5,7 +5,7 @@ const schema = require("../schemas/ProductSchema");
 const Product = mongoose.model("Product", schema);
 
 router.post("/post-product", async (req, res) => {
-  console.log(req.body);
+  const newProduct = Product(req.body);
   try {
     await newProduct.save();
     res.status(200).json({
@@ -56,11 +56,20 @@ router.put("/quantity/:id", async (req, res) => {
 });
 
 router.delete("/delete-item/:id", async (req, res) => {
-  console.log(req.params.id);
   try {
     const id = req.params.id;
     const deleteItem = await Product.deleteOne({ id });
     res.send(deleteItem);
+  } catch (err) {
+    res.send(err.message);
+  }
+});
+
+router.get("/get-myItems", async (req, res) => {
+  const user = req.query.user;
+  try {
+    const getUser = await Product.find({ user });
+    res.send(getUser);
   } catch (err) {
     res.send(err.message);
   }

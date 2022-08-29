@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const handleProduct = require("./routes/Product");
+const handleBlog = require("./routes/Blogs");
+const handleUser = require("./routes/handleUser");
 const app = express();
 require("dotenv").config();
 const port = process.env.PORT || 3000;
@@ -18,7 +20,9 @@ mongoose
   });
 
 app.use("/product", handleProduct);
+app.use("/blog", handleBlog);
 
+app.use("/user", handleUser);
 app.get("/", (req, res) => {
   res.send("hello from wirehouse");
 });

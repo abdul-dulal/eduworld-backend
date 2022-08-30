@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const mongoose = require("mongoose");
 const schema = require("../schemas/ProductSchema");
-
+const checkLogin = require("../middlewares/CheckLogin");
 const Product = mongoose.model("Product", schema);
 
 router.post("/post-product", async (req, res) => {
@@ -19,7 +19,7 @@ router.post("/post-product", async (req, res) => {
   }
 });
 
-router.get("/get-all", async (req, res) => {
+router.get("/get-all", checkLogin, async (req, res) => {
   try {
     const product = await Product.find({});
     res.send(product);

@@ -27,6 +27,17 @@ app.get("/", (req, res) => {
   res.send("hello from wirehouse");
 });
 
+const errorHandeler = (err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+  res.status(500).json({
+    error: err,
+  });
+};
+
+app.use(errorHandeler);
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

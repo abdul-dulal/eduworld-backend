@@ -19,7 +19,7 @@ router.post("/post-product", async (req, res) => {
   }
 });
 
-router.get("/get-all", checkLogin, async (req, res) => {
+router.get("/get-all", async (req, res) => {
   try {
     const product = await Product.find({});
     res.send(product);
@@ -56,16 +56,17 @@ router.put("/quantity/:id", async (req, res) => {
 });
 
 router.delete("/delete-item/:id", async (req, res) => {
+  console.log(req.params.id);
   try {
     const id = req.params.id;
-    const deleteItem = await Product.deleteOne({ id });
+    const deleteItem = await Product.findByIdAndDelete({ _id: id });
     res.send(deleteItem);
   } catch (err) {
     res.send(err.message);
   }
 });
 
-router.get("/get-myItems", async (req, res) => {
+router.get("/get-myItems", checkLogin, async (req, res) => {
   const user = req.query.user;
   try {
     const getUser = await Product.find({ user });
